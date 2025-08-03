@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCountdown();
     
     // RSVP form
-    initRSVPForm();
+    initRSVPForm(); 
     
     // Scroll animations
     initScrollAnimations();
@@ -38,8 +38,9 @@ function initMobileNav() {
 
 // Countdown Timer
 function initCountdown() {
-    // Set your wedding date here (YYYY-MM-DD)
-    const weddingDate = new Date('2024-12-25T00:00:00').getTime();
+    // Set your wedding date here (YYYY-MM-DD HH:MM)
+    // Change this to your actual wedding date and time
+    const weddingDate = new Date('2025-08-15T14:00:00').getTime();
     
     function updateCountdown() {
         const now = new Date().getTime();
@@ -51,18 +52,44 @@ function initCountdown() {
             const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((difference % (1000 * 60)) / 1000);
             
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            // Update the countdown display
+            const daysElement = document.getElementById('days');
+            const hoursElement = document.getElementById('hours');
+            const minutesElement = document.getElementById('minutes');
+            const secondsElement = document.getElementById('seconds');
+            
+            if (daysElement) daysElement.textContent = days.toString().padStart(2, '0');
+            if (hoursElement) hoursElement.textContent = hours.toString().padStart(2, '0');
+            if (minutesElement) minutesElement.textContent = minutes.toString().padStart(2, '0');
+            if (secondsElement) secondsElement.textContent = seconds.toString().padStart(2, '0');
+            
+            // Update countdown message based on time remaining
+            const countdownMessage = document.querySelector('.countdown-message');
+            if (countdownMessage) {
+                if (days === 0 && hours < 24) {
+                    countdownMessage.textContent = 'Less than 24 hours to go! 💕';
+                } else if (days === 1) {
+                    countdownMessage.textContent = 'Just one more day! 💕';
+                } else {
+                    countdownMessage.textContent = 'We can\'t wait to celebrate with you! 💕';
+                }
+            }
         } else {
             // Wedding day has arrived!
-            document.getElementById('days').textContent = '00';
-            document.getElementById('hours').textContent = '00';
-            document.getElementById('minutes').textContent = '00';
-            document.getElementById('seconds').textContent = '00';
+            const daysElement = document.getElementById('days');
+            const hoursElement = document.getElementById('hours');
+            const minutesElement = document.getElementById('minutes');
+            const secondsElement = document.getElementById('seconds');
             
-            document.querySelector('.countdown-message').textContent = 'Today is the big day! 🎉';
+            if (daysElement) daysElement.textContent = '00';
+            if (hoursElement) hoursElement.textContent = '00';
+            if (minutesElement) minutesElement.textContent = '00';
+            if (secondsElement) secondsElement.textContent = '00';
+            
+            const countdownMessage = document.querySelector('.countdown-message');
+            if (countdownMessage) {
+                countdownMessage.textContent = 'Today is the big day! 🎉';
+            }
         }
     }
     

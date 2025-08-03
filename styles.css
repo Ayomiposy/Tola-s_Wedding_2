@@ -2,15 +2,15 @@
 
 :root {
     /* Wedding Color Palette */
-    --background: hsl(39, 21%, 92%); /* Warm beige */
-    --foreground: hsl(25, 47%, 15%); /* Dark chocolate */
+    --background: #f5f1e8; /* Light beige */
+    --foreground: #3c2f2f; /* Coffee brown */
     --card: hsl(0, 0%, 100%); /* Pure white */
-    --primary: hsl(25, 75%, 47%); /* Rich chocolate */
-    --primary-foreground: hsl(0, 0%, 100%);
-    --accent: hsl(0, 65%, 35%); /* Deep burgundy */
-    --muted-foreground: hsl(25, 25%, 45%);
-    --wedding-rose: hsl(355, 85%, 88%);
-    --wedding-cream: hsl(48, 33%, 96%);
+    --primary: #8b6f47; /* Coffee brown */
+    --primary-foreground: #f5f1e8; /* Light beige text */
+    --accent: #a67c52; /* Lighter coffee */
+    --muted-foreground: #6b5b47; /* Muted coffee */
+    --wedding-rose: #f8f4ed; /* Very light beige */
+    --wedding-cream: #f5f1e8; /* Same as background */
     
     /* Typography */
     --font-script: 'Lavishly Yours', cursive;
@@ -18,8 +18,8 @@
     --font-body: 'DM Sans', sans-serif;
     
     /* Shadows */
-    --shadow-elegant: 0 10px 30px -10px hsla(25, 75%, 47%, 0.3);
-    --shadow-card: 0 4px 20px -4px hsla(0, 0%, 0%, 0.1);
+    --shadow-elegant: 0 10px 30px -10px rgba(139, 111, 71, 0.2);
+    --shadow-card: 0 4px 20px -4px hsla(0, 0%, 0%, 0.08);
 }
 
 * {
@@ -127,7 +127,8 @@ html {
     position: relative;
     display: flex;
     align-items: center;
-    background-image: url(./assets/low-angle-bride-groom-posing-outdoors.jpg);
+    background-color: var(--background);
+    background-image: url(./assets/Heroimage.jpg);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -139,7 +140,7 @@ html {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(139, 111, 71, 0.1);
 }
 
 .hero-content {
@@ -198,7 +199,7 @@ html {
 
 .hero-welcome {
     background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: white;
+    color: var(--primary-foreground);
     padding: 3rem;
     border-radius: 20px;
     box-shadow: var(--shadow-card);
@@ -211,7 +212,7 @@ html {
     top: 1rem;
     right: 1rem;
     font-size: 2rem;
-    color: var(--wedding-rose);
+    color: var(--accent);
     animation: float 3s ease-in-out infinite;
 }
 
@@ -381,7 +382,7 @@ html {
 .program {
     padding: 5rem 0;
     background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: white;
+    color: var(--primary-foreground);
 }
 
 .program-content {
@@ -405,7 +406,7 @@ html {
 
 .program-details .section-title,
 .program-details .section-subtitle {
-    color: white;
+    color: var(--primary-foreground);
     text-align: left;
 }
 
@@ -417,7 +418,7 @@ html {
     display: flex;
     gap: 1.5rem;
     margin-bottom: 2rem;
-    background: hsla(255, 255, 255, 0.1);
+    background: hsla(255, 255, 255, 0.3);
     padding: 1.5rem;
     border-radius: 15px;
     backdrop-filter: blur(10px);
@@ -425,11 +426,11 @@ html {
 }
 
 .schedule-item:hover {
-    background: hsla(255, 255, 255, 0.2);
+    background: hsla(255, 255, 255, 0.4);
 }
 
 .schedule-icon {
-    background: hsla(255, 255, 255, 0.2);
+    background: hsla(255, 255, 255, 0.4);
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -541,7 +542,7 @@ html {
 
 .rsvp-form-container {
     background: var(--primary);
-    color: white;
+    color: var(--primary-foreground);
     padding: 3rem;
     border-radius: 20px;
     box-shadow: var(--shadow-card);
@@ -584,9 +585,9 @@ html {
 
 .form-group input,
 .form-group select {
-    background: hsla(255, 255, 255, 0.1);
-    border: 1px solid hsla(255, 255, 255, 0.2);
-    color: white;
+    background: hsla(255, 255, 255, 0.2);
+    border: 1px solid hsla(255, 255, 255, 0.3);
+    color: var(--primary-foreground);
     padding: 1rem;
     border-radius: 8px;
     font-size: 1rem;
@@ -594,17 +595,17 @@ html {
 }
 
 .form-group input::placeholder {
-    color: hsla(255, 255, 255, 0.6);
+    color: hsla(255, 255, 255, 0.7);
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: hsla(255, 255, 255, 0.5);
+    border-color: hsla(255, 255, 255, 0.6);
 }
 
 .btn-submit {
-    background: white;
+    background: var(--primary-foreground);
     color: var(--primary);
     border: none;
     padding: 1rem 2rem;
@@ -620,7 +621,7 @@ html {
 }
 
 .btn-submit:hover {
-    background: hsla(255, 255, 255, 0.9);
+    background: #e8e0d0;
     transform: translateY(-2px);
 }
 
@@ -664,8 +665,8 @@ html {
 
 /* Footer */
 .footer {
-    background: var(--foreground);
-    color: white;
+    background: var(--primary);
+    color: var(--primary-foreground);
     padding: 3rem 0;
 }
 
@@ -701,7 +702,7 @@ html {
 
 .social-link {
     background: hsla(255, 255, 255, 0.1);
-    color: white;
+    color: var(--primary-foreground);
     text-decoration: none;
     padding: 1rem;
     border-radius: 50%;
