@@ -122,42 +122,49 @@ function initRSVPForm() {
     });
 }
 
-// Submit to Google Form directly (background submission)
+// Submit to Google Form using form submission method
 function submitToGoogleForm(formData) {
-    // Your Google Form submission URL 
-    const googleFormUrl = 'https://docs.google.com/forms/d/1tajn59wio6e5B59-J4cyuelg_SpxaCGKo8_8F6zl8t4/formResponse';
+    // Create a temporary form to submit to Google Forms
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://docs.google.com/forms/d/1tajn59wio6e5B59-J4cyuelg_SpxaCGKo8_8F6zl8t4/formResponse';
+    form.target = '_blank';
+    form.style.display = 'none';
     
-    // Create form data for Google Forms
-    const googleFormData = new FormData();
+    // Add form fields
+    const nameInput = document.createElement('input');
+    nameInput.type = 'hidden';
+    nameInput.name = 'entry.1113962632';
+    nameInput.value = formData.name;
+    form.appendChild(nameInput);
     
+    const emailInput = document.createElement('input');
+    emailInput.type = 'hidden';
+    emailInput.name = 'entry.1257516428';
+    emailInput.value = formData.email;
+    form.appendChild(emailInput);
     
-    googleFormData.append('entry.1113962632', formData.name);
-    googleFormData.append('entry.1257516428', formData.email);
-    googleFormData.append('entry.1335481464', formData.attendance);
+    const attendanceInput = document.createElement('input');
+    attendanceInput.type = 'hidden';
+    attendanceInput.name = 'entry.1335481464';
+    attendanceInput.value = formData.attendance;
+    form.appendChild(attendanceInput);
     
-    // Submit using fetch (background submission)
-    fetch(googleFormUrl, {
-        method: 'POST',
-        body: googleFormData,
-        mode: 'no-cors' // Required for Google Forms
-    })
-    .then(() => {
-        // Show success message
-        showSuccessModal(formData.name);
-        
-        // Reset form
-        document.getElementById('rsvp-form').reset();
-        
-        // Also store locally for backup
-        storeLocally(formData);
-    })
-    .catch((error) => {
-        console.error('Error submitting form:', error);
-        // Still show success message as Google Forms might not return a response
-        showSuccessModal(formData.name);
-        document.getElementById('rsvp-form').reset();
-        storeLocally(formData);
-    });
+    // Add form to page and submit
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Remove the form
+    document.body.removeChild(form);
+    
+    // Show success message
+    showSuccessModal(formData.name);
+    
+    // Reset form
+    document.getElementById('rsvp-form').reset();
+    
+    // Store locally for backup
+    storeLocally(formData);
 }
 
 // Store RSVP data locally as backup
