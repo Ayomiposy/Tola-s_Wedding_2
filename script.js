@@ -40,7 +40,7 @@ function initMobileNav() {
 function initCountdown() {
     // Set your wedding date here (YYYY-MM-DD HH:MM)
     // Change this to your actual wedding date and time
-    const weddingDate = new Date('2025-08-15T14:00:00').getTime();
+    const weddingDate = new Date('2025-09-20T14:00:00').getTime();
     
     function updateCountdown() {
         const now = new Date().getTime();
@@ -117,15 +117,68 @@ function initRSVPForm() {
             return;
         }
         
+        // Submit to Google Form
+        submitToGoogleForm(formData);
+    });
+}
+
+// Submit to Google Form directly (background submission)
+function submitToGoogleForm(formData) {
+    // Your Google Form submission URL 
+    const googleFormUrl = 'https://docs.google.com/forms/d/1tajn59wio6e5B59-J4cyuelg_SpxaCGKo8_8F6zl8t4/formResponse';
+    
+    // Create form data for Google Forms
+    const googleFormData = new FormData();
+    
+    
+    googleFormData.append('entry.1113962632', formData.name);
+    googleFormData.append('entry.1257516428', formData.email);
+    googleFormData.append('entry.1335481464', formData.attendance);
+    
+    // Submit using fetch (background submission)
+    fetch(googleFormUrl, {
+        method: 'POST',
+        body: googleFormData,
+        mode: 'no-cors' // Required for Google Forms
+    })
+    .then(() => {
         // Show success message
         showSuccessModal(formData.name);
         
         // Reset form
-        form.reset();
+        document.getElementById('rsvp-form').reset();
         
-        // Here you would typically send the data to your backend
-        console.log('RSVP Data:', formData);
+        // Also store locally for backup
+        storeLocally(formData);
+    })
+    .catch((error) => {
+        console.error('Error submitting form:', error);
+        // Still show success message as Google Forms might not return a response
+        showSuccessModal(formData.name);
+        document.getElementById('rsvp-form').reset();
+        storeLocally(formData);
     });
+}
+
+// Store RSVP data locally as backup
+function storeLocally(formData) {
+    let rsvps = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
+    rsvps.push({
+        ...formData,
+        timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('weddingRSVPs', JSON.stringify(rsvps));
+    
+    // Log for testing
+    console.log('RSVP stored locally:', formData);
+    console.log('All stored RSVPs:', rsvps);
+}
+
+// Function to view stored RSVPs (for testing)
+function viewStoredRSVPs() {
+    const rsvps = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
+    console.log('All stored RSVPs:', rsvps);
+    alert(`Stored RSVPs: ${rsvps.length}\nCheck console for details.`);
 }
 
 // Success Modal

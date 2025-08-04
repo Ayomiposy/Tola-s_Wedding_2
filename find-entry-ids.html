@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Form Entry ID Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .step h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #dc3545;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Google Form Entry ID Finder</h1>
+        
+        <div class="step">
+            <h3>Step 1: Get Your Form URL</h3>
+            <p>1. Go to your Google Form</p>
+            <p>2. Click "Send" (top right)</p>
+            <p>3. Click the link icon (chain icon)</p>
+            <p>4. Copy the form URL</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Enter Your Form URL</h3>
+            <div class="form-group">
+                <label for="formUrl">Google Form URL:</label>
+                <input type="text" id="formUrl" placeholder="https://docs.google.com/forms/d/YOUR_FORM_ID/viewform">
+            </div>
+            <button onclick="findEntryIds()">Find Entry IDs</button>
+        </div>
+
+        <div id="result"></div>
+
+        <div class="step">
+            <h3>Step 3: Update Your JavaScript</h3>
+            <p>Once you have the entry IDs, update your <code>script.js</code> file with the correct IDs.</p>
+        </div>
+    </div>
+
+    <script>
+        async function findEntryIds() {
+            const formUrl = document.getElementById('formUrl').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!formUrl) {
+                resultDiv.innerHTML = '<div class="error">Please enter your Google Form URL</div>';
+                return;
+            }
+
+            // Extract form ID from URL
+            const formIdMatch = formUrl.match(/\/forms\/d\/([^\/]+)/);
+            if (!formIdMatch) {
+                resultDiv.innerHTML = '<div class="error">Invalid Google Form URL. Please check the URL format.</div>';
+                return;
+            }
+
+            const formId = formIdMatch[1];
+            const formResponseUrl = `https://docs.google.com/forms/d/${formId}/formResponse`;
+
+            try {
+                // Try to fetch the form to get entry IDs
+                const response = await fetch(formResponseUrl, {
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
+
+                // Since we can't actually fetch the form due to CORS, we'll provide instructions
+                resultDiv.innerHTML = `
+                    <div class="result">
+                        <h4>✅ Form ID Found!</h4>
+                        <p><strong>Form ID:</strong> <code>${formId}</code></p>
+                        <p><strong>Form Response URL:</strong> <code>${formResponseUrl}</code></p>
+                        
+                        <h4>📋 To Find Entry IDs:</h4>
+                        <ol>
+                            <li>Open your Google Form in a browser</li>
+                            <li>Right-click and select "View Page Source"</li>
+                            <li>Press Ctrl+F and search for "entry."</li>
+                            <li>Look for entries like <code>entry.123456789</code></li>
+                            <li>Note down the entry IDs for each field</li>
+                        </ol>
+                        
+                        <h4>🔧 Alternative Method:</h4>
+                        <ol>
+                            <li>Open your Google Form</li>
+                            <li>Press F12 to open Developer Tools</li>
+                            <li>Go to the "Network" tab</li>
+                            <li>Fill out and submit the form</li>
+                            <li>Look for the form submission in Network tab</li>
+                            <li>Check the "Form Data" section for entry IDs</li>
+                        </ol>
+                        
+                        <h4>📝 Update Your JavaScript:</h4>
+                        <p>Replace in <code>script.js</code>:</p>
+                        <pre><code>const googleFormUrl = '${formResponseUrl}';
+
+// Replace these with your actual entry IDs:
+googleFormData.append('entry.123456789', formData.name);     // Name field
+googleFormData.append('entry.987654321', formData.email);    // Email field  
+googleFormData.append('entry.456789123', formData.attendance); // Attendance field</code></pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>⚠️ Could not automatically fetch entry IDs</h4>
+                        <p>Please use the manual method:</p>
+                        <ol>
+                            <li>Open your Google Form</li>
+                            <li>Right-click and "View Page Source"</li>
+                            <li>Search for "entry." to find the entry IDs</li>
+                        </ol>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html> 
