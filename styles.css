@@ -466,11 +466,87 @@ html {
 .venue-label {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    font-weight: 600;
 }
 
 .venue-name {
     font-family: var(--font-script);
-    font-size: 2rem;
+    font-size: 2.2rem;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    margin-bottom: 0.5rem;
+}
+
+.venue-address {
+    color: #ffffff;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.contact-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--wedding-rose);
+    border-radius: 15px;
+    border-left: 4px solid var(--primary);
+}
+
+.contact-icon {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-top: 0.25rem;
+}
+
+.contact-label {
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.contact-name {
+    color: var(--muted-foreground);
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+}
+
+.dress-code-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border-radius: 15px;
+    border-left: 4px solid #fdcb6e;
+}
+
+.dress-code-icon {
+    font-size: 1.5rem;
+    color: #e17055;
+    margin-top: 0.25rem;
+}
+
+.dress-code-label {
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.dress-code-text {
+    color: #e17055;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Countdown Section */
